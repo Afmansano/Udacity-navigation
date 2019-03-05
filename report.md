@@ -97,5 +97,9 @@ The weights learned during this run are saved in the file trained_model-fully_tr
 
 ## Future Works
 
-For future work we could try changing the optimizers, using RMSProp os momentum SGD in place of Adam and check the effect of the learning rate, also change parameters like tau.
-We may also try another aschitectures, like Dueling DQN and use Prioritized Experience Replay.
+As presented in [Issues in Using Function Approximation for Reinforcement Learning](https://www.ri.cmu.edu/pub_files/pub1/thrun_sebastian_1993_1/thrun_sebastian_1993_1.pdf), DQL tends to overstimate action-values.
+
+One approach to deal with this problem is to use Dueling Network, that has the ability to learn the state-value function efficiently. According to Sutton & Barto, 1998, the value stream V is update at each  Q value update – this contrasts with the updates in a single-stream architecture where only the value for one of the actions is updated. This more frequent updating of the value stream in this approach allocates more resources to V, and thus allows for better approximation of the state values, which in turn need to be accurate for temporal-difference-based methods like Q-learning to work. So, instead of a single estimator for Q-function, Dueling Network method adds aditional information about the composition of action-value funciton, what decreases the noise and improve accuracy.
+
+
+Together with the use of Dueling Networks, we could instead of randomly sampling memories sample tham prioritized by its score, using the Prioritized Experience Replay approach, to avoid the cases where rare but important experiences could be missed or not so much used during learning.
